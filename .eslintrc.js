@@ -25,5 +25,10 @@ module.exports = {
       exports: 'never',
       functions: 'never',
     }],
+    '@typescript-eslint/member-delimiter-style': ['error', {
+      multiline: {
+        delimiter: 'comma',
+      },
+    }],
   },
 }
