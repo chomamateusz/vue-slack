@@ -4,16 +4,16 @@
   >
     <VListItemAvatar>
       <VImg
-      v-if="message.author.avatar"
-      :src="message.author.avatar"
+        v-if="message.author.avatar"
+        :src="message.author.avatar"
       >
       </VImg>
       <VIcon
-       v-else
-       class="base-message__avatar--fallback"
-       >
-       mdi-account
-       </VIcon>
+        v-else
+        class="base-message__avatar--fallback"
+      >
+        mdi-account
+      </VIcon>
     </VListItemAvatar>
 
     <VListItemContent>

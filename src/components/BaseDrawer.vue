@@ -1,23 +1,32 @@
 <template>
   <div class="base-drawer">
+
+    <slot name="before-header"/>
+
     <VListItem>
       <RouterLink
         class="base-drawer__link"
         :to="headerTo"
       >
         <VListItemContent>
-              <VListItemTitle class="title"> {{header}} </VListItemTitle>
+          <VListItemTitle class="title"> {{header}} </VListItemTitle>
         </VListItemContent>
       </RouterLink>
     </VListItem>
 
+    <slot name="after-header"/>
+
     <VDivider></VDivider>
+
+    <slot name="before-list"/>
 
     <BaseErrorLoad v-if="hasError"/>
     <BaseListItemLoader v-else-if="isLoading"/>
     <VList v-else dense nav>
-        <slot v-for="item in items" :item="item" />
+      <slot v-for="item in items" :item="item" />
     </VList>
+
+    <slot name="after-list"/>
 
   </div>
 </template>

@@ -5,8 +5,10 @@ export interface Channel {
   title: string,
 }
 
+const collection = firestore.collection('channels')
+
 export const subscribe = (successCallback: (data: Channel[]) => void, errorCallback?: (error: firebase.firestore.FirestoreError) => void) => {
-  const unsubscribe = firestore.collection('channels').onSnapshot(
+  const unsubscribe = collection.onSnapshot(
     (querySnapshot) => {
       const data = querySnapshot.docs.map((doc) => ({ ...doc.data(), key: doc.id })) as Channel[]
       successCallback(data)
@@ -15,4 +17,10 @@ export const subscribe = (successCallback: (data: Channel[]) => void, errorCallb
   )
 
   return unsubscribe
+}
+
+export const add = (title: string) => {
+  return collection.add({
+    title,
+  })
 }

@@ -16,16 +16,38 @@
         </VListItemContent>
       </VListItem>
     </template>
+    <template v-slot:after-list v-if="!isChannelsLoading">
+      <div class="channels__add-channel-input">
+        <BaseAddInputButton
+          v-model="newChannelName"
+          :isInputVisible="isNewChannelInputVisible"
+          :isLoading="isNewChannelLoading"
+          @requestClose="closeNewChannelInput"
+          @submit="addChannel"
+        />
+      </div>
+    </template>
   </BaseDrawer>
 </template>
+
+<style scoped>
+.channels__add-channel-input{
+  /* @QUESTION is here a them accesible to manage spacings? */
+  padding: 8px;
+}
+</style>
 
 <script lang="ts">
 import Vue from 'vue'
 import BaseDrawer from '../components/BaseDrawer.vue'
+import BaseAddInputButton from '../components/BaseAddInputButton.vue'
 
-import { subscribe as subscribeToChannels, Channel } from '../api/channels'
+import { subscribe as subscribeToChannels, add as addChannel, Channel } from '../api/channels'
 
 interface ComponentData {
+  newChannelName: string,
+  isNewChannelInputVisible: boolean,
+  isNewChannelLoading: boolean,
   channels: Channel[],
   isChannelsLoading: boolean,
   hasChannelsError: boolean,
@@ -37,10 +59,14 @@ export default Vue.extend({
 
   components: {
     BaseDrawer,
+    BaseAddInputButton,
   },
 
   data (): ComponentData {
     return {
+      newChannelName: '',
+      isNewChannelInputVisible: false,
+      isNewChannelLoading: false,
       channels: [],
       isChannelsLoading: true,
       hasChannelsError: false,
@@ -62,6 +88,26 @@ export default Vue.extend({
 
   beforeDestroy () {
     this.unsubscribeFromChannels && this.unsubscribeFromChannels()
+  },
+
+  methods: {
+
+    closeNewChannelInput () {
+      this.newChannelName = ''
+      this.isNewChannelInputVisible = !this.isNewChannelInputVisible
+    },
+
+    async addChannel () {
+      this.isNewChannelLoading = true
+      try {
+        await addChannel(this.newChannelName)
+        this.closeNewChannelInput()
+      } catch (error) {
+        // @TODO error handling
+      }
+      this.isNewChannelLoading = false
+    },
+
   },
 
 })

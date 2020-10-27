@@ -16,7 +16,7 @@
         </h1>
 
         <p class="subheading font-weight-regular">
-         Choose or add a channel from the menu on the left and start chatting!
+          Choose or add a channel from the menu on the left and start chatting!
         </p>
       </VCol>
 
