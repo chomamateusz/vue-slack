@@ -5,6 +5,18 @@
     :isLoading="isChannelsLoading"
     :hasError="hasChannelsError"
   >
+    <template v-slot:before-header>
+      <div class="channels__add-channel-input">
+        <VBtn
+          @click="logOut"
+          block
+          text
+        >
+          LOG OUT
+        </VBtn>
+      </div>
+      <VDivider />
+    </template>
     <template v-slot:default="slotProps">
       <VListItem
         :key="slotProps.key"
@@ -106,6 +118,10 @@ export default Vue.extend({
         // @TODO error handling
       }
       this.isNewChannelLoading = false
+    },
+
+    logOut () {
+      this.$store.dispatch('logOut')
     },
 
   },

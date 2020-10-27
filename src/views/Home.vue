@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <HelloWorld
+      header="Welcome to Vue-Slack"
+      message="Choose or add a channel from the menu on the left and start chatting!"
+    />
   </div>
 </template>
 

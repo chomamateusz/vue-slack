@@ -1,24 +1,24 @@
 <template>
   <VApp class="app">
 
-    <VNavigationDrawer app>
-      <Channels />
-    </VNavigationDrawer>
+    <Login>
 
-    <VMain  class="app__main">
+      <MainLayout>
 
-      <VContainer
-        class="app__container"
-        fluid
-      >
+        <template v-slot:side-bar>
+          <Channels />
+        </template>
 
-        <RouterView></RouterView>
+        <template v-slot:content>
+          <RouterView></RouterView>
+        </template>
 
-      </VContainer>
+      </MainLayout>
 
-    </VMain>
+    </Login>
 
   </VApp>
+
 </template>
 
 <style>
@@ -27,30 +27,23 @@ body, html {
 }
 </style>
 
-<style scoped>
-.app__main{
-  max-height: 100vh;
-  overflow: hidden;
-}
-.app__container{
-  padding: 0;
-  height: 100%;
-}
-</style>
-
 <script lang="ts">
 import Vue from 'vue'
+
+import MainLayout from './templates/MainLayout.vue'
+
 import Channels from './views/Channels.vue'
+import Login from './views/Login.vue'
 
 export default Vue.extend({
   name: 'App',
 
   components: {
+    MainLayout,
     Channels,
+    Login,
   },
 
-  data: () => ({
-    //
-  }),
+  data: () => ({}),
 })
 </script>

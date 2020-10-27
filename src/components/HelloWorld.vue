@@ -11,15 +11,27 @@
       </VCol>
 
       <VCol class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vue-Slack
+        <h1 class="display-1 font-weight-bold mb-3">
+          {{header}}
         </h1>
-
         <p class="subheading font-weight-regular">
-          Choose or add a channel from the menu on the left and start chatting!
+          {{ message}}
         </p>
       </VCol>
 
     </VRow>
   </VContainer>
 </template>
+
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
+  name: 'HelloWorld',
+
+  props: {
+    header: String,
+    message: String,
+  },
+})
+</script>
