@@ -1,12 +1,12 @@
 <template>
-<ChannelLayout>
-  <template v-slot:messages>
-    <Messages :channelKey="$route.params.channelKey" />
-  </template>
-  <template v-slot:bar>
-    <NewMessage />
-  </template>
-</ChannelLayout>
+  <ChannelLayout>
+    <template v-slot:messages>
+      <Messages :channelKey="$route.params.channelKey" />
+    </template>
+    <template v-slot:bar>
+      <NewMessage :channelKey="$route.params.channelKey" />
+    </template>
+  </ChannelLayout>
 </template>
 
 <style scoped>

@@ -1,12 +1,18 @@
 <template>
-<div>
-  <div v-for="message in messages" :key="message.key">
-    <BaseMessage :message="message"/>
+  <div class="messages" ref="root">
+    <div v-for="message in messages" :key="message.key">
+      <BaseMessage :message="message"/>
+    </div>
   </div>
-</div>
 </template>
 
 <style scoped>
+.messages{
+  height: 100%;
+  padding: 12px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
 </style>
 
 <script lang="ts">
@@ -32,6 +38,7 @@ export default Vue.extend({
 
   props: {
     channelKey: String,
+    containerRef: Object,
   },
 
   data (): ComponentData {
@@ -49,13 +56,29 @@ export default Vue.extend({
         this.isMessagesLoading = false
         this.hasMessagesError = false
         this.messages = data
+        this.scrollBottom()
       },
       () => { this.hasMessagesError = true }
     )
   },
 
+  mounted () {
+    this.scrollBottom()
+  },
+
   beforeDestroy () {
     this.unsubscribeFromChannelMessages && this.unsubscribeFromChannelMessages()
+  },
+
+  methods: {
+
+    scrollBottom () {
+      queueMicrotask(() => {
+        const list = this.$refs.root as Element
+        list.scrollTo(0, list.scrollHeight)
+      })
+    },
+
   },
 })
 </script>

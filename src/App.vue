@@ -1,22 +1,42 @@
 <template>
-<VApp>
+  <VApp class="app">
 
-  <VNavigationDrawer app>
-    <Channels />
-  </VNavigationDrawer>
+    <VNavigationDrawer app>
+      <Channels />
+    </VNavigationDrawer>
 
-  <VMain>
+    <VMain  class="app__main">
 
-    <VContainer fluid>
+      <VContainer
+        class="app__container"
+        fluid
+      >
 
-      <RouterView></RouterView>
+        <RouterView></RouterView>
 
-    </VContainer>
+      </VContainer>
 
-  </VMain>
+    </VMain>
 
-</VApp>
+  </VApp>
 </template>
+
+<style>
+body, html {
+  overflow: hidden;
+}
+</style>
+
+<style scoped>
+.app__main{
+  max-height: 100vh;
+  overflow: hidden;
+}
+.app__container{
+  padding: 0;
+  height: 100%;
+}
+</style>
 
 <script lang="ts">
 import Vue from 'vue'

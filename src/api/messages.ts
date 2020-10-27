@@ -3,7 +3,7 @@ import firebase, { firestore } from '../firebaseConf'
 export interface Message {
   key: string,
   text: string,
-  date: string,
+  date: number,
   author: {
     email: string,
     avatar: string,
@@ -14,13 +14,16 @@ export interface Message {
 const collection = firestore.collection('messages')
 
 export const subscribe = (channelKey: string) => (successCallback: (data: Message[]) => void, errorCallback?: (error: firebase.firestore.FirestoreError) => void) => {
-  const unsubscribe = collection.where('channelKey', '==', channelKey).onSnapshot(
-    (querySnapshot) => {
-      const data = querySnapshot.docs.map((doc) => ({ ...doc.data(), key: doc.id })) as Message[]
-      successCallback(data)
-    },
-    errorCallback
-  )
+  const unsubscribe = collection
+    .where('channelKey', '==', channelKey)
+    .onSnapshot(
+      (querySnapshot) => {
+        const data = querySnapshot.docs.map((doc) => ({ ...doc.data(), key: doc.id })) as Message[]
+        const dataSorted = data.sort(({ date: dateA }, { date: dateB }) => dateA - dateB)
+        successCallback(dataSorted)
+      },
+      errorCallback
+    )
 
   return unsubscribe
 }
@@ -28,7 +31,7 @@ export const subscribe = (channelKey: string) => (successCallback: (data: Messag
 export const add = (channelKey: string) => (text: string) => {
   return collection.add({
     text,
-    date: new Date(),
+    date: Date.now(),
     // @TODO add author
     author: {
       email: 'example@example.com',
