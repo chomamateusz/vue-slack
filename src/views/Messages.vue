@@ -1,18 +1,7 @@
 <template>
 <div>
   <div v-for="message in messages" :key="message.key">
-
-        <VListItem>
-          <VListItemAvatar>
-            <VAvatar :src="message.avatar"></VAvatar>
-          </VListItemAvatar>
-
-          <VListItemContent>
-            <VListItemTitle>{{ message.text }}</VListItemTitle>
-            <VListItemSubtitle>{{ message.date | moment('from', 'now') }}</VListItemSubtitle>
-          </VListItemContent>
-        </VListItem>
-
+    <BaseMessage :message="message"/>
   </div>
 </div>
 </template>
@@ -22,6 +11,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
+
+import BaseMessage from '../components/BaseMessage.vue'
 
 import { subscribe as subscribeToChannelMessages, Message } from '../api/messages'
 
@@ -34,6 +25,10 @@ interface ComponentData {
 
 export default Vue.extend({
   name: 'Messages',
+
+  components: {
+    BaseMessage,
+  },
 
   props: {
     channelKey: String,
