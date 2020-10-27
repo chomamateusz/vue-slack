@@ -12,7 +12,7 @@
         ref="input"
         v-model="newMessageText"
         :rules="messageRules"
-        :disabled="isMessageSending"
+        :disabled="isDisabled"
         :error="hasMessageError"
         :error-message="errorMessage"
         @blur="resetValidation"
@@ -23,7 +23,7 @@
         class="new-message__btn"
         color="primary"
         :loading="isMessageSending"
-        :disabled="isMessageSending"
+        :disabled="isDisabled"
       >
         <VIcon
           left
@@ -56,6 +56,7 @@ export default Vue.extend({
 
   props: {
     channelKey: String,
+    disabled: Boolean,
   },
 
   data () {
@@ -69,6 +70,14 @@ export default Vue.extend({
       errorMessage: '',
       newMessageText: '',
     }
+  },
+
+  computed: {
+
+    isDisabled () {
+      return this.disabled || this.isMessageSending
+    },
+
   },
 
   methods: {

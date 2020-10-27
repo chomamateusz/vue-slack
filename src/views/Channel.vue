@@ -1,10 +1,16 @@
 <template>
   <ChannelLayout>
     <template v-slot:messages>
-      <Messages :channelKey="$route.params.channelKey" />
+      <Messages
+        :channelKey="$route.params.channelKey"
+        @ready="toggleChannelReady($event)"
+      />
     </template>
     <template v-slot:bar>
-      <NewMessage :channelKey="$route.params.channelKey" />
+      <NewMessage
+        :disabled="!isChannelReady"
+        :channelKey="$route.params.channelKey"
+      />
     </template>
   </ChannelLayout>
 </template>
@@ -12,12 +18,16 @@
 <style scoped>
 </style>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
 
-import ChannelLayout from '../templates/ChannelLayout'
-import Messages from './Messages'
-import NewMessage from './NewMessage'
+import ChannelLayout from '../templates/ChannelLayout.vue'
+import Messages from './Messages.vue'
+import NewMessage from './NewMessage.vue'
+
+interface ChannelData {
+  isChannelReady: boolean,
+}
 
 export default Vue.extend({
   name: 'Channel',
@@ -26,6 +36,18 @@ export default Vue.extend({
     ChannelLayout,
     Messages,
     NewMessage,
+  },
+
+  data (): ChannelData {
+    return {
+      isChannelReady: false,
+    }
+  },
+
+  methods: {
+    toggleChannelReady (data: boolean) {
+      this.isChannelReady = data
+    },
   },
 
 })

@@ -4,16 +4,16 @@
   >
     <VListItemAvatar>
       <VImg
-        v-if="message.author.avatar"
         :src="message.author.avatar"
       >
+        <template v-slot:placeholder>
+          <VIcon
+            class="base-message__avatar--fallback"
+          >
+            mdi-account
+          </VIcon>
+        </template>
       </VImg>
-      <VIcon
-        v-else
-        class="base-message__avatar--fallback"
-      >
-        mdi-account
-      </VIcon>
     </VListItemAvatar>
 
     <VListItemContent>
@@ -25,7 +25,6 @@
 </template>
 
 <style scoped>
-.base-message{}
 .base-message__avatar--fallback{
   background-color: rgba(0, 0, 0, 0.1);
 }
@@ -33,6 +32,7 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
+
 import { Message } from '../api/messages'
 
 export default Vue.extend({

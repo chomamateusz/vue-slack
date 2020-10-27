@@ -5,7 +5,19 @@ import { auth, googleProvider } from './firebaseConf'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+interface UserData {
+  email: string,
+  displayName: string,
+  avatar: string,
+}
+
+interface AuthState {
+  isVerified: boolean,
+  loggedIn: boolean,
+  userData: UserData | null,
+}
+
+export default new Vuex.Store<{auth: AuthState}>({
   state: {
     auth: {
       isVerified: false,
@@ -18,7 +30,7 @@ export default new Vuex.Store({
       state.auth.loggedIn = value
     },
     SET_USER (state, data) {
-      state.auth.userData = data
+      state.auth.userData = data && { displayName: data.displayName, email: data.email, avatar: data.photoURL }
     },
     SET_AUTH_CHECKED (state, data) {
       state.auth.isVerified = data

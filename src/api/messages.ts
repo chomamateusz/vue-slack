@@ -1,5 +1,7 @@
 import firebase, { firestore } from '../firebaseConf'
 
+import store from '../store'
+
 export interface Message {
   key: string,
   text: string,
@@ -29,15 +31,12 @@ export const subscribe = (channelKey: string) => (successCallback: (data: Messag
 }
 
 export const add = (channelKey: string) => (text: string) => {
+  const userData = store.state.auth?.userData
+
   return collection.add({
     text,
     date: Date.now(),
-    // @TODO add author
-    author: {
-      email: 'example@example.com',
-      avatar: 'https://https://picsum.photos//100/100',
-      displayName: 'Mateusz',
-    },
+    author: userData,
     channelKey,
   })
 }
